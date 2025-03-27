@@ -1,0 +1,13 @@
+{
+  "name": "server-api-clients",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ms-kodi-2024",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
