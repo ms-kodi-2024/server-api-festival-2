@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/client/build')));
 
-mongoose.connect('mongodb://0.0.0.0:27017/NewWaveDB');
+mongoose.connect('mongodb+srv://mstalmach:zf9QoZv3r64pObkM@cluster0.amwpric.mongodb.net/NewWaveDB?retryWrites=true&w=majority&appName=Cluster0');
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Connected to the database');
