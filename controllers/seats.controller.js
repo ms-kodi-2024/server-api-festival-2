@@ -1,4 +1,5 @@
 const Seat = require('../models/seat.model');
+const pusher = require('../pusher');
 
 const getAllSeats = async (req, res) => {
   try {
@@ -32,7 +33,7 @@ const createSeat = async (req, res) => {
     const newSeat = new Seat(req.body);
     const savedSeat = await newSeat.save();
     const allSeats = await Seat.find();
-    req.io.emit('seatsUpdated', allSeats);
+    pusher.trigger('seats-channel', 'seats-updated', allSeats);
     res.status(201).json(savedSeat);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -52,7 +53,7 @@ const updateSeat = async (req, res) => {
     );
     if (!updatedSeat) return res.status(404).send({ message: 'Not found...' });
     const allSeats = await Seat.find();
-    req.io.emit('seatsUpdated', allSeats);
+    pusher.trigger('seats-channel', 'seats-updated', allSeats);
     res.json(updatedSeat);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -64,7 +65,7 @@ const deleteSeat = async (req, res) => {
     const deletedSeat = await Seat.findByIdAndDelete(req.params.id);
     if (!deletedSeat) return res.status(404).send({ message: 'Not found...' });
     const allSeats = await Seat.find();
-    req.io.emit('seatsUpdated', allSeats);
+    pusher.trigger('seats-channel', 'seats-updated', allSeats);
     res.json({ message: 'OK' });
   } catch (error) {
     res.status(500).send({ message: error.message });
